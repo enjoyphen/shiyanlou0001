@@ -23,42 +23,28 @@ class File(db.Model):
     title = db.Column(db.String(80))
     created_time = db.Column(db.DateTime)
     category_id = db.Column(db.Integer,db.ForeignKey('category.id'))
+    category = db.relationship('Category',backref='cname')
     content = db.Column(db.Text)
-    def __init__(self,title,created_time,category_id,content):
+    def __init__(self,title,created_time,category,content):
         self.title = title
-        self.create_time = created_time
-        self.category_id = category_id
+        self.created_time = created_time
+        self.category = category
         self.content= content
     def __repr__(self):
         return '<title:%s>'%self.title
-db.create_all()
-java = Category('Java')
-python = Category('Python')
-file1 = File('Hello Java', datetime.utcnow(), java, 'File Content - Java is cool!')
-file2 = File('Hello Python',datetime.utcnow(),python, 'File Content - Pythonis cool!')
-db.session.add(java)
-db.session.add(python)
-db.session.add(file1)
-db.session.add(file2)
-db.session.commit()
-print(java.id)
 path0 = '/home/shiyanlou/files/'
 files = (os.listdir(path0))
  
 @app.route('/')
 def index():
-    str = []
-    for file in files:
-        with open(path0+file) as f:
-            jsonfield = json.load(f)
-            str.append(jsonfield['title'])
-    return '{}\n{}'.format(str[0],str[1])
+    str = File.query.all()
+    str1 = str.cname
+    return rendjer_template('index.html',str)
 
-@app.route('/files/<filename>')
-def file(filename):
-    if os.path.isfile(path0+filename+'.json'):
-        with open(path0+filename+'.json') as f:
-            return f.read()
+@app.route('/files/<file_id>')
+def file(file_id):
+    item = File.query.filter(id==file_id).first()
+        return render_template('file.html',item)
     else:
         return render_template('404.html')
 
