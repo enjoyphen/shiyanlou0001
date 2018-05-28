@@ -23,8 +23,6 @@ class Category(db.Model):
         self.name = name
     def __repr__(self):
         return '<id:%s>'% self.id
-
-   
 class File(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80))
@@ -40,33 +38,53 @@ class File(db.Model):
     def __repr__(self):
         return '<title:%s>'%self.title
      # tag list
+      def _gettags(self):
+          try:
+             lst= mdb.user.find_one({'name':self.id})
+             if lst is None:
+                 mdb.user.insert_one({'name':self.id, 'tags':[]})
+                 lst = []
+         except KeyError:
+             mdb.user.update_one({'name':self.id,'tags':[]})
+             lst = []
+         return lst
     @property
     def tags(self):
-        if mdb.user.find_one({'name':self.id}) is None:
-            mdb.user.insert_one({'name':self.id,'tags':[]})
-        else:
-            lst = mdb.user.find_one({'name':self.id})
-            lst = lst['tags']
-        return lst 
+        return self._gettags() 
     # add a tag to article
     def add_tag(self, tag_name):
     # add a tag named by tag_name and save it to mdb
     # add tag_name to dict
-        if tag_name not in self.tags:
-            self.tags.append(tag_name)
+        lst_tags = self._gettags()
+        if tag_name not in lst_tags:
             mdb.user.update_one({'name':self.id},
-                {'$set':{'tags':self.tags}})
+                {'$set':{'tags':lst_tags.append(tag_name)}})
         else:
             return None
     # remove the tag
     def remove_tag(self, tag_name):
         # remove the tag from current artilce in mdb
-        if tag_name in self.tags:
-            self.tags.remove(tag_name)
+        lst_tags = self._gettags()
+        if tag_name in lst_tags:
             mdb.user.update_one({'name':self.id},
-                {'$set':{'tags':self.tags}})
+                {'$set':{'tags':lst_tags.remove(tag_name)}})
         else:
             return None
+
+db.create_all()
+java = Category('Java')
+python = Category('Python')
+file1 = File('Hello Java', datetime.utcnow(), java, 'File Content - Java is     cool!')
+file2 = File('Hello Python', datetime.utcnow(), python, 'File Content - Pyth    on is cool!')
+db.session.add(java)
+db.session.add(python)
+db.session.add(file1)
+db.session.add(file2)
+db.session.commit()
+file1.add_tag('tech')
+file1.add_tag('java')
+file1.add_tag('linux')
+file2.add_tag('tech')
 
 
 
