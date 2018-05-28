@@ -23,6 +23,8 @@ class Category(db.Model):
         self.name = name
     def __repr__(self):
         return '<id:%s>'% self.id
+
+   
 class File(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80))
@@ -42,24 +44,27 @@ class File(db.Model):
     def tags(self):
         if mdb.user.find_one({'name':self.id}) is None:
             mdb.user.insert_one({'name':self.id,'tags':[]})
-        lst = mdb.user.find_one({'name':self.id})
-        lst = lst['tags']
+        else:
+            lst = mdb.user.find_one({'name':self.id})
+            lst = lst['tags']
         return lst 
     # add a tag to article
     def add_tag(self, tag_name):
     # add a tag named by tag_name and save it to mdb
     # add tag_name to dict
         if tag_name not in self.tags:
+            self.tags.append(tag_name)
             mdb.user.update_one({'name':self.id},
-                {'$set':{'tags':self.tags.append(tag_name)}})
+                {'$set':{'tags':self.tags}})
         else:
             return None
     # remove the tag
     def remove_tag(self, tag_name):
         # remove the tag from current artilce in mdb
         if tag_name in self.tags:
+            self.tags.remove(tag_name)
             mdb.user.update_one({'name':self.id},
-                {'$set':{'tags':self.tags.remove(tag_name)}})
+                {'$set':{'tags':self.tags}})
         else:
             return None
 
