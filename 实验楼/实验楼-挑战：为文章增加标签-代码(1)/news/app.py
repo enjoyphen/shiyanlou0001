@@ -57,7 +57,6 @@ class File(db.Model):
     # add a tag named by tag_name and save it to mdb
     # add tag_name to dict
         lst_tags = self._gettags()
-        print(lst_tags)
         if tag_name not in lst_tags:
             lst_tags.append(tag_name)
             mdb.user.update_one({'name':self.id},
@@ -74,23 +73,6 @@ class File(db.Model):
         else:
             return None
 
-db.create_all()
-java = Category('Java')
-python = Category('Python')
-file1 = File('Hello Java', datetime.utcnow(), java, 'File Content - Java is     cool!')
-file2 = File('Hello Python', datetime.utcnow(), python, 'File Content - Pyth    on is cool!')
-db.session.add(java)
-db.session.add(python)
-db.session.add(file1)
-db.session.add(file2)
-db.session.commit()
-file1.add_tag('tech')
-file1.add_tag('java')
-file1.add_tag('linux')
-file2.add_tag('tech')
-
-
-
 @app.route('/')
 def index():
     files = File.query.all()
@@ -104,4 +86,8 @@ def file(file_id):
 @app.route('/files/')
 def files():
     return render_template('404.html')
+
+if __name__ = '__main__':
+    #todo
+    pass
 
