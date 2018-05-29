@@ -40,10 +40,10 @@ class File(db.Model):
      # tag list
       def _gettags(self):
           try:
-             lst= mdb.user.find_one({'name':self.id})
-             if lst is None:
+             lst= mdb.user.find_one({'name':self.id}) # logical is wrong
+             if lst is None: # though lst is not None, lst['tags'] may be None 
                  mdb.user.insert_one({'name':self.id, 'tags':[]})
-                 lst = []
+                 lst = [] 
          except KeyError:
              mdb.user.update_one({'name':self.id,'tags':[]})
              lst = []
