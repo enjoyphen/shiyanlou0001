@@ -39,19 +39,11 @@ def main():
                 url_dict[url] += 1
             except KeyError:
                 url_dict[url] = 1
-    print(j)
     lst_ip = sorted(ip_dict.items(), key=lambda x:x[1], reverse=True)
     lst_url = sorted(url_dict.items(), key=lambda x:x[1], reverse=True)
     #url_dict = ip_dict ={}-->the dict value will be the same finllay
     url_dict = {}
     ip_dict = {}
-#    print(lst_ip[0],lst_url[0])
-    for i in lst_ip:
-        if i[0] =='127.0.0.1':
-            print(i[1])
-    for i in lst_url:
-        if i[0] == '/favicon.ico':
-            print(i[1])
     url_dict[lst_url[0][0]] = lst_url[0][1]
     ip_dict[lst_ip[0][0]] = lst_ip[0][1]
 
