@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+	<head>
+		<meta charset='utf-8'>
+		<meta http-quiv='X-UA-Compatible' content='IE=edge'>
+		<meta name='Viewport' content='width=device-width initial-scale-1'>
+		<scipt src='htttps://apps.bding.com/libs/jquery/2.1.4/jquery.min.js'></script>
+		<title>test</title>
+		<link href='{{url_for('static',filename='bootstrap-3.3.7-dist/css/bootstrap.min.css') }}' rel='stylesheet'>
+	</head>
+	<body style='position:relative;padding-top:70px;'>
+		<nav class='navbar navbar-default navbar-fixed-top navbar-inverse' role='navagation'>
+			<div class='container'>
+			<div class='navbar-header'>
+				<button type='button' class='toggle-collapse' data-toggle='collapse' data-target='#eg-nav-collapse'>
+					<span class='sr-only'>change nav</span>
+					<span class='icon'></span>
+					<span class='icon'></span>
+					<span class='icon'></span>
+					<a class='navbar-brand' href='#'>brand</a>
+				</button>
+			</div>
+			<div class='collapse navbar-collapse' id='eg-nav-collapse'>
+				<ul class='nav navbar-nav'>
+					<li class='active'><a href='#'>home0</a></li>
+					<li ><a href='#'>home1</a></li>
+					<li ><a href='#'>home2</a></li>
+					<li ><a href='#'>home3</a></li>
+				</ul>
+			</div>
+			</div>
+		</nav>
+		<div class='container'>
+		<div class='row'>
+			<div class='col-sm-8'> 
+				<h1>example</h1>
+				<p class='lead blog-description'>what is it</p>
+				<h2 id='sample-blog-post'>sample blog post</h2>
+				<p class='blog-post-meta'> 2018-6-1 by<a href='#'>mark</a></p>
+				<hr>
+				<p><em>xieti</em><strong>strong word</strong></p>
+				<p><code>def a():
+							print(b)</code></p>
+				<pre>
+				<code>
+				def a():
+					prnt(b)
+				</code>
+				</pre>
+				<blockquote>
+					this is quote
+						tab
+						<br/>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<p>
+						this is a new line
+						</p>
+				</blockquote>
+				<h2 id='sample-blog-post1'>
+					sample blog post1
+				</h2>
+				<p>
+				say something
+				</p>
+			</div>
+			<div class='col-sm-4' style='top:20px,position:fixed;'>
+				<h4>
+					archives
+				</h4>
+				<ol>
+					<li>
+						<a href='#sample-blog-post'>
+						sample blog post
+						</a>
+					</li>
+					<li>
+						<a href='#sample-blog-post1'>
+						sample blog post1
+						</a>
+					</li>
+				</ol>
+			</div>
+		</div>
+		</div>
+	</body>
+</html>
